@@ -38,8 +38,7 @@ def plot_stress_strain(material, ax):
 # Plotting the final graphs (using plot())
 fig, ax = plt.subplots(2, 2, figsize=(16, 16))
 for i, material in zip(range(4), dfs.keys()):
-    print(i%2, i//2, material)
-    plot_stress_strain(material, ax[i % 2][i // 2])
+    plot_stress_strain(material, ax[i % 2][i // 2]) # i%2, i//2 -> left column fills first
 
 # Show & Save Plot
 plt.savefig(r"stress_strain_graphs.png")
