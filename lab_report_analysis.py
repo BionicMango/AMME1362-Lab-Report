@@ -61,7 +61,7 @@ def properties(material, Ei):
 
     print(mech_properties_j)
 
-    mech_properties_j.to_csv(material + "_" + "mechanical_properties.csv")
+    mech_properties_j.to_csv(r"Mechanical Properties\\" + material + "_" + "mechanical_properties.csv")
 
 
 # Plotting function (one figure for each material)
