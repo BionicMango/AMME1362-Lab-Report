@@ -59,8 +59,8 @@ def properties(material, Ei):
         # Strain at Fracture
         mech_properties_j.loc[i, "Fracture Strain"] = np.max(strain) # points after fracture already removed
 
+    mech_properties_j.loc["Mean"] = mech_properties_j.mean()
     print(mech_properties_j)
-
     mech_properties_j.to_csv(r"Mechanical Properties\\" + material + "_" + "mechanical_properties.csv")
 
 
@@ -74,14 +74,13 @@ def plot_stress_strain(material, ax):
         ax.plot(strain, stress, label=f"{material} Trial {i+1}", c=colors[i])
         ax.set_xlabel("Strain (%)")
         ax.set_ylabel("Stress (kPa)")
-    ax.axvline(strain[25])
     ax.grid()
     ax.legend()
 
 
 # Plotting the final graphs (using plot())
 data_cleanup()
-fig, ax = plt.subplots(2, 2, figsize=(16, 16))
+fig, ax = plt.subplots(2, 2, figsize=(12, 8))
 for i, material in zip(range(4), dfs.keys()):
     properties(material, 25) # manually determined Ei
     plot_stress_strain(material, ax[i % 2][i // 2]) # i%2, i//2 -> left column fills first
