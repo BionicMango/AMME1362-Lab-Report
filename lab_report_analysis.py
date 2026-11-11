@@ -34,7 +34,7 @@ def data_cleanup():
 
 # Finding mechanical property values
 def properties(material, Ei):
-    mech_properties[material] = pd.DataFrame(columns=["E", "Yield Strength", "UTS", "Fracture Strain"], index=[0, 1, 2])
+    mech_properties[material] = pd.DataFrame(columns=["E (GPa)", "Yield Strength (MPa)", "UTS (MPa)", "Fracture Strain"], index=[0, 1, 2])
     print(material)
     for i in range(3):
         mech_properties_j = mech_properties[material]
@@ -43,26 +43,25 @@ def properties(material, Ei):
         strain = df["Strain %"] / 100
 
         # E
-        mech_properties_j.loc[i, "E"] = stress[Ei] / strain[Ei] # any point in elastic region
+        mech_properties_j.loc[i, "E (GPa)"] = 10**(-9) * stress[Ei] / strain[Ei] # (GPa) any point in elastic region
 
         # Yield Strength (acrylic has no yield strength)
         if material == "acrylic":
-            mech_properties_j.loc[i, "Yield Strength"] = np.nan
+            mech_properties_j.loc[i, "Yield Strength (MPa)"] = np.nan
         else:
             ratios = abs(stress/strain - 0.002)
             Yi = ratios.argmin() # when stress/strain ratio is closest to 0.002
-            mech_properties_j.loc[i, "Yield Strength"] = stress[Yi]
-            print(stress[Yi])
+            mech_properties_j.loc[i, "Yield Strength (MPa)"] = 10**(-6) * stress[Yi]
 
         # UTS
-        mech_properties_j.loc[i, "UTS"] = np.max(stress)
+        mech_properties_j.loc[i, "UTS (MPa)"] = 10**(-6) * np.max(stress)
 
         # Strain at Fracture
         mech_properties_j.loc[i, "Fracture Strain"] = np.max(strain) # points after fracture already removed
 
-        print(mech_properties_j)
+    print(mech_properties_j)
 
-        mech_properties_j.to_csv(material + "_" + "mechanical_properties.csv")
+    mech_properties_j.to_csv(material + "_" + "mechanical_properties.csv")
 
 
 # Plotting function (one figure for each material)
