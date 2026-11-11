@@ -18,7 +18,7 @@ for i in data.keys():
         dfs[i][j].attrs["w"] = specs[i + " w (mm)"][j]
         dfs[i][j].attrs["t"] = specs[i + " t (mm)"][j]
 
-        # Unnecessary column "Starin 1 mm/mm"
+        # Unnecessary column "Strain 1 mm/mm"
         if "Strain 1 mm/mm" in dfs[i][j].columns:
             dfs[i][j].drop("Strain 1 mm/mm", axis=1, inplace=True)
 
