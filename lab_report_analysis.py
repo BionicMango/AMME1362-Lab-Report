@@ -87,5 +87,6 @@ for i, material in zip(range(4), dfs.keys()):
     plot_stress_strain(material, ax[i % 2][i // 2]) # i%2, i//2 -> left column fills first
 
 # Show & Save Plot
+plt.tight_layout()
 plt.savefig(r"stress_strain_graphs.png")
 plt.show()
